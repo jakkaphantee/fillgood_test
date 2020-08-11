@@ -1,0 +1,18 @@
+.web-theme-input-box {
+  background-color: white;
+  border-radius: 0;
+  border: 1px solid gainsboro;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+  &:focus {
+    background-color: #F7F7F7;
+    border-color: black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    box-shadow: none;
+  }
+}
