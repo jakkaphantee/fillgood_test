@@ -1,6 +1,7 @@
 @import '../_colors';
 
 .web-theme-button-primary {
+  position: relative;
   color: white;
   background-color: $primary;
   border-color: $primary;
@@ -28,12 +29,61 @@
     box-shadow: none;
   }
 
-  &.is-loading {
-    // implement loading style
+  .is-loading {
+    background-color: $primary;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    transition: all 0.2s;
+
+    .loader {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border: 2px solid white;
+      border-radius: 50%;
+      border-top: 2px solid black;
+      width: 24px;
+      height: 24px;
+      -webkit-animation: spin 0.7s linear infinite; /* Safari */
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+
+    &:focus {
+      background-color: $primary;
+    }
+
+    &:active {
+      background-color: $primary-active;
+    }
   }
 }
 
 .web-theme-button-secondary {
+  position: relative;
   color: white;
   background-color: $secondary;
   border-color: $secondary;
@@ -61,7 +111,55 @@
     box-shadow: none;
   }
 
-  &.is-loading {
-    // implement loading style
+  .is-loading {
+    background-color: $primary;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    transition: all 0.2s;
+
+    .loader {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border: 2px solid white;
+      border-radius: 50%;
+      border-top: 2px solid black;
+      width: 24px;
+      height: 24px;
+      -webkit-animation: spin 0.7s linear infinite; /* Safari */
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+
+    &:focus {
+      background-color: $primary;
+    }
+
+    &:active {
+      background-color: $primary-active;
+    }
   }
 }
