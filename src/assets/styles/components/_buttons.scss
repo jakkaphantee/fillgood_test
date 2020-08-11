@@ -29,6 +29,11 @@
     box-shadow: none;
   }
 
+  &.disabled {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+
   .is-loading {
     background-color: $primary;
     position: absolute;
@@ -111,8 +116,13 @@
     box-shadow: none;
   }
 
+  &.disabled {
+    background-color: $secondary-hover;
+    border-color: $secondary-hover;
+  }
+
   .is-loading {
-    background-color: $primary;
+    background-color: $secondary;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -151,15 +161,15 @@
     }
 
     &:hover {
-      background-color: $primary-hover;
+      background-color: $secondary-hover;
     }
 
     &:focus {
-      background-color: $primary;
+      background-color: $secondary;
     }
 
     &:active {
-      background-color: $primary-active;
+      background-color: $secondary-active;
     }
   }
 }
