@@ -13,17 +13,17 @@
               <label for="username">
                 <strong>Username</strong>
               </label>
-              <b-input id="username" class="web-theme-input-box" type="text" autocomplete="off" />
+              <b-input id="username" class="web-theme-input-box" type="text" autocomplete="off" v-model="username" />
             </div>
             <div class="mt-4" align="left">
               <label for="password">
                 <strong>Password</strong>
               </label>
-              <b-input id="password" class="web-theme-input-box" type="password" autocomplete="off" />
+              <b-input id="password" class="web-theme-input-box" type="password" autocomplete="off" v-model="password" />
             </div>
-            <div class="mt-4">
-              <b-button class="web-theme-button-primary" block>
-                Login
+            <div class="mt-5">
+              <b-button class="web-theme-button-primary pt-3 pb-3" block>
+                <strong>Login</strong>
                 <div v-if="false" class="is-loading">
                   <div class="loader" />
                 </div>
@@ -40,7 +40,8 @@
 export default {
   data () {
     return {
-      //
+      username: '',
+      password: ''
     }
   }
 }
