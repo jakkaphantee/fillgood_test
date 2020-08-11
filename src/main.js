@@ -7,6 +7,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import '@/assets/styles/_font.scss'
 import '@/assets/styles/components/_buttons.scss'
 import '@/assets/styles/components/_cardcontainer.scss'
 
