@@ -1,0 +1,34 @@
+@import '../_colors';
+
+.web-theme-button-primary {
+  color: white;
+  background-color: $primary;
+  border-color: $primary;
+  border-radius: 2px;
+
+  &:hover {
+    color: white;
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+
+  &:active {
+    color: white !important;
+    background-color: $primary-active !important;
+    border-color: $primary-active !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    color: white;
+    background-color: $primary-focus;
+    border-color: $primary-focus;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.is-loading {
+    // implement loading style
+  }
+}
