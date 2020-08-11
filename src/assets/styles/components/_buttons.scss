@@ -32,3 +32,36 @@
     // implement loading style
   }
 }
+
+.web-theme-button-secondary {
+  color: white;
+  background-color: $secondary;
+  border-color: $secondary;
+  border-radius: 2px;
+
+  &:hover {
+    color: white;
+    background-color: $secondary-hover;
+    border-color: $secondary-hover;
+  }
+
+  &:active {
+    color: white !important;
+    background-color: $secondary-active !important;
+    border-color: $secondary-active !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    color: white;
+    background-color: $secondary-focus;
+    border-color: $secondary-focus;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &.is-loading {
+    // implement loading style
+  }
+}
