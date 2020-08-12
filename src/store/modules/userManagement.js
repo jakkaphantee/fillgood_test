@@ -1,6 +1,6 @@
-import {
-  firebaseFirestore
-} from '@/services/firebase'
+// import {
+//   firebaseFirestore
+// } from '@/services/firebase'
 
 import {
   USER_MANAGEMENT_GET_REQUEST,
@@ -173,7 +173,20 @@ const mutations = {
   }
 }
 
-const actions = {}
+const actions = {
+  async getUser ({ commit }) {
+    //
+  },
+  async getUserDetail ({ commit }, { id }) {
+    //
+  },
+  async createUser ({ commit }, { firstName, lastName, age, address }) {
+    //
+  },
+  async deleteUser ({ commit }, { id }) {
+    //
+  }
+}
 
 export default {
   namespaced: true,
