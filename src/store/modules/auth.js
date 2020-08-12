@@ -2,11 +2,68 @@ import {
   firebaseAuth
 } from '@/services/firebase'
 
-const state = {}
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT
+} from '../types'
 
-const mutations = {}
+firebaseAuth.onAuthStateChanged((user) => {
+  if (user) {
+    state.isLoggedIn = true
+    state.userProfile = user
+  }
+  state.isFirebaseInit = false
+})
 
-const actions = {}
+const state = {
+  isFirebaseInit: true,
+  userProfile: {},
+  isLoggedIn: false,
+  isLoading: false,
+  isSuccess: false,
+  errorCode: '',
+  errorMessage: ''
+}
+
+const mutations = {
+  [LOGIN_REQUEST] (state) {
+    state.isLoading = true
+    state.isSuccess = false
+  },
+  [LOGIN_SUCCESS] (state) {
+    state.isLoading = false
+    state.isSuccess = true
+    state.isLoggedIn = true
+  },
+  [LOGIN_FAILURE] (state, error) {
+    state.isLoading = false
+    state.isSuccess = false
+    state.errorCode = error.code
+    state.errorMessage = error.message
+  },
+  [LOGOUT] (state) {
+    state.isLoggedIn = false
+    state.userProfile = {}
+  }
+}
+
+const actions = {
+  async login ({ commit }, { email, password }) {
+    try {
+      commit(LOGIN_REQUEST)
+      await firebaseAuth.signInWithEmailAndPassword(email, password)
+      commit(LOGIN_SUCCESS)
+    } catch (error) {
+      commit(LOGIN_FAILURE, error)
+    }
+  },
+  async logout ({ commit }) {
+    commit(LOGOUT)
+    firebaseAuth.signOut()
+  }
+}
 
 export default {
   namespaced: true,
