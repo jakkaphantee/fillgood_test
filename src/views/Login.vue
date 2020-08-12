@@ -22,9 +22,9 @@
               <b-input id="password" class="web-theme-input-box" type="password" autocomplete="off" v-model="password" />
             </div>
             <div class="mt-5">
-              <b-button class="web-theme-button-primary pt-3 pb-3" block>
+              <b-button class="web-theme-button-primary pt-3 pb-3" block @click="login({ email: username, password: password })" :disabled="isLoading">
                 <strong>Login</strong>
-                <div v-if="false" class="is-loading">
+                <div v-if="isLoading" class="is-loading">
                   <div class="loader" />
                 </div>
               </b-button>
@@ -44,6 +44,36 @@ export default {
     return {
       username: '',
       password: ''
+    }
+  },
+  mounted () {
+    if (this.isLoggedIn) {
+      this.$router.push({ name: 'HomePage' })
+    }
+  },
+  methods: {
+    ...mapActions('auth', {
+      login: 'login'
+    })
+  },
+  computed: {
+    ...mapState('auth', {
+      isLoggedIn: (state) => state.isLoggedIn,
+      isLoading: (state) => state.isLoading,
+      isSuccess: (state) => state.isSuccess,
+      errorMessage: (state) => state.errorMessage
+    })
+  },
+  watch: {
+    isLoading () {
+      if (!this.isLoading && !this.isSuccess) {
+        alert(this.errorMessage)
+      }
+    },
+    isLoggedIn (newValue) {
+      if (newValue) {
+        this.$router.push({ name: 'HomePage' })
+      }
     }
   }
 }
