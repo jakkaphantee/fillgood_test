@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Login from '@/views/Login'
 import HomePage from '@/views/HomePage'
+import CreateUser from '@/views/CreateUser'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/',
     name: 'HomePage',
     component: HomePage
+  },
+  {
+    path: '/create',
+    name: 'CreateUser',
+    component: CreateUser
   }
 ]
 
