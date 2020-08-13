@@ -6,6 +6,10 @@ import {
 } from '@/services/userManagementService'
 
 import {
+  createAccount
+} from '@/services/authService'
+
+import {
   USER_MANAGEMENT_GET_REQUEST,
   USER_MANAGEMENT_GET_SUCCESS,
   USER_MANAGEMENT_GET_FAILURE,
@@ -204,10 +208,15 @@ const actions = {
       commit(USER_MANAGEMENT_GET_DETAIL_FAILURE, error)
     }
   },
-  async createUserProfile ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
+  async createUserProfile ({ commit }, { email, password, firstName, lastName, phoneNumber, age, address }) {
     try {
       commit(USER_MANAGEMENT_CREATE_REQUEST)
+      await createAccount({
+        email: email,
+        password: password
+      })
       await createUserProfile({
+        email: email,
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
