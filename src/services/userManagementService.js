@@ -6,7 +6,8 @@ const COLLECTION = 'users'
 
 const getUser = () => firebaseFirestore.collection(COLLECTION).get()
 const getUserDetail = ({ id }) => firebaseFirestore.collection(COLLECTION).doc(id).get()
-const createUserProfile = ({ firstName, lastName, phoneNumber, age, address }) => firebaseFirestore.collection(COLLECTION).add({
+const createUserProfile = ({ email, firstName, lastName, phoneNumber, age, address }) => firebaseFirestore.collection(COLLECTION).add({
+  email: email,
   first_name: firstName,
   lastName: lastName,
   phone_number: phoneNumber,
