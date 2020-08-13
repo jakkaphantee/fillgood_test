@@ -1,5 +1,6 @@
 import {
-  firebaseAuth
+  login,
+  logout
 } from '@/services/firebase'
 
 import {
@@ -53,7 +54,7 @@ const actions = {
   async login ({ commit }, { email, password }) {
     try {
       commit(LOGIN_REQUEST)
-      await firebaseAuth.signInWithEmailAndPassword(email, password)
+      await login({ email: email, password: password })
       commit(LOGIN_SUCCESS)
     } catch (error) {
       commit(LOGIN_FAILURE, error)
@@ -61,7 +62,7 @@ const actions = {
   },
   async logout ({ commit }) {
     commit(LOGOUT)
-    firebaseAuth.signOut()
+    logout()
   }
 }
 
