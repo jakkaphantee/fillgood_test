@@ -2,6 +2,7 @@ import {
   getUser,
   getUserDetail,
   createUserProfile,
+  updateUserProfile,
   deleteUserProfile
 } from '@/services/userManagementService'
 
@@ -226,6 +227,15 @@ const actions = {
       commit(USER_MANAGEMENT_CREATE_SUCCESS)
     } catch (error) {
       commit(USER_MANAGEMENT_CREATE_FAILURE, error)
+    }
+  },
+  async updateUserProfile ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
+    try {
+      commit(USER_MANAGEMENT_UPDATE_REQUEST)
+      await updateUserProfile({ firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, age: age, address: address })
+      commit(USER_MANAGEMENT_UPDATE_SUCCESS)
+    } catch (error) {
+      commit(USER_MANAGEMENT_UPDATE_FAILURE, error)
     }
   },
   async deleteUser ({ commit }, { id }) {
