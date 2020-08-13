@@ -16,8 +16,12 @@ import {
 
 firebaseAuth.onAuthStateChanged((user) => {
   if (user) {
+    console.log(user.email)
     state.isLoggedIn = true
     state.userProfile = user
+    if (state.isFirebaseInit) {
+      state.isAdmin = user.email === 'admin@admin.com'
+    }
   }
   state.isFirebaseInit = false
 })
@@ -27,9 +31,14 @@ const state = {
   userProfile: {},
   isLoggedIn: false,
   isLoading: false,
+  isAdmin: false,
   isSuccess: false,
   errorCode: '',
   errorMessage: ''
+}
+
+const getters = {
+  isAdmin: (state) => state.isAdmin
 }
 
 const mutations = {
@@ -50,6 +59,8 @@ const mutations = {
   },
   [LOGOUT] (state) {
     state.isLoggedIn = false
+    state.isAdmin = false
+    state.isFirebaseInit = true
     state.userProfile = {}
   }
 }
@@ -73,6 +84,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
