@@ -9,7 +9,14 @@ const getUserDetail = ({ id }) => firebaseFirestore.collection(COLLECTION).doc(i
 const createUserProfile = ({ email, firstName, lastName, phoneNumber, age, address }) => firebaseFirestore.collection(COLLECTION).add({
   email: email,
   first_name: firstName,
-  lastName: lastName,
+  last_name: lastName,
+  phone_number: phoneNumber,
+  age: age,
+  address: address
+})
+const updateUserProfile = ({ id, firstName, lastName, phoneNumber, age, address }) => firebaseFirestore.collection(COLLECTION).doc(id).update({
+  first_name: firstName,
+  last_name: lastName,
   phone_number: phoneNumber,
   age: age,
   address: address
@@ -20,5 +27,6 @@ export {
   getUser,
   getUserDetail,
   createUserProfile,
+  updateUserProfile,
   deleteUserProfile
 }
