@@ -2,7 +2,7 @@
   <div class="pt-5 pb-5">
     <b-container align="left">
       <div align="right">
-        <b-button class="web-theme-button-primary" size="lg">
+        <b-button class="web-theme-button-primary" size="lg" @click="changePage('MyProfile')">
           <strong>My Profile</strong>
         </b-button>
       </div>
@@ -97,10 +97,13 @@ export default {
       this.$router.push({ name: routeName, params: { ...(id && { id: id }) } })
     },
     addressFormat (value) {
-      if (value.length > 30) {
-        return value.substring(0, 29) + '...'
+      if (value) {
+        if (value.length > 30) {
+          return value.substring(0, 29) + '...'
+        }
+        return value
       }
-      return value
+      return ''
     }
   },
   computed: {
