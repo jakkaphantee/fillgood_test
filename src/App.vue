@@ -10,9 +10,6 @@ import { mapState } from 'vuex'
 
 export default {
   mounted () {
-    if (!this.isLoggedIn) {
-      this.$router.push({ name: 'Login' })
-    }
     this.$router.beforeEach((to, from, next) => {
       if (!this.isLoggedIn) {
         next({ name: 'Login' })
@@ -28,9 +25,9 @@ export default {
     })
   },
   watch: {
-    isLoggedIn (newValue) {
-      if (newValue) {
-        this.$router.push({ name: 'HomePage' })
+    isFirebaseInit () {
+      if (!this.isLoggedIn) {
+        this.$router.push({ name: 'Login' })
       }
     }
   }
