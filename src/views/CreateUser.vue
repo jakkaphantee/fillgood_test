@@ -147,8 +147,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('userManagement', {
-      createUserProfile: 'createUserProfile'
+    ...mapActions({
+      login: 'auth/login',
+      createUserProfile: 'userManagement/createUserProfile'
     }),
     submitCreate () {
       if (this.$v.$anyDirty) {
@@ -163,10 +164,11 @@ export default {
     }
   },
   computed: {
-    ...mapState('userManagement', {
-      isLoading: (state) => state.create.isLoading,
-      isSuccess: (state) => state.create.isSuccess,
-      errorMessage: (state) => state.create.errorMessage
+    ...mapState({
+      isLoading: (state) => state.userManagement.create.isLoading,
+      isSuccess: (state) => state.userManagement.create.isSuccess,
+      errorMessage: (state) => state.userManagement.create.errorMessage,
+      isAdmin: (state) => state.auth.isAdmin
     })
   },
   watch: {
@@ -175,6 +177,9 @@ export default {
         alert(this.errorMessage)
       } else if (!this.isLoading && this.isSuccess) {
         this.$router.push({ name: 'HomePage' })
+        if (this.isAdmin) {
+          this.login({ email: 'admin@admin.com', password: 'admin442' })
+        }
       }
     }
   }
