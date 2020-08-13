@@ -212,11 +212,12 @@ const actions = {
   async createUserProfile ({ commit }, { email, password, firstName, lastName, phoneNumber, age, address }) {
     try {
       commit(USER_MANAGEMENT_CREATE_REQUEST)
-      await createAccount({
+      const response = await createAccount({
         email: email,
         password: password
       })
       await createUserProfile({
+        id: response.user.uid,
         email: email,
         firstName: firstName,
         lastName: lastName,
