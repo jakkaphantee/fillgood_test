@@ -108,7 +108,7 @@ const mutations = {
       ...state.detail,
       isLoading: false,
       isSuccess: true,
-      data: response
+      data: response.data()
     }
   },
   [USER_MANAGEMENT_GET_DETAIL_FAILURE] (state, error) {
@@ -229,10 +229,10 @@ const actions = {
       commit(USER_MANAGEMENT_CREATE_FAILURE, error)
     }
   },
-  async updateUserProfile ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
+  async updateUserProfile ({ commit }, { id, firstName, lastName, phoneNumber, age, address }) {
     try {
       commit(USER_MANAGEMENT_UPDATE_REQUEST)
-      await updateUserProfile({ firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, age: age, address: address })
+      await updateUserProfile({ id: id, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, age: age, address: address })
       commit(USER_MANAGEMENT_UPDATE_SUCCESS)
     } catch (error) {
       commit(USER_MANAGEMENT_UPDATE_FAILURE, error)
