@@ -142,14 +142,14 @@ export default {
   },
   methods: {
     ...mapActions('userManagement', {
-      createUser: 'createUser'
+      createUserProfile: 'createUserProfile'
     }),
     submitCreate () {
       if (this.$v.$anyDirty) {
         if (this.$v.$invalid) {
           alert('Please re-check your form.')
         } else {
-          this.createUser({ firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
+          this.createUserProfile({ firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
         }
       } else {
         alert('Please fill the form.')

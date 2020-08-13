@@ -1,8 +1,8 @@
 import {
   getUser,
   getUserDetail,
-  createUser,
-  deleteUser
+  createUserProfile,
+  deleteUserProfile
 } from '@/services/userManagementService'
 
 import {
@@ -204,10 +204,10 @@ const actions = {
       commit(USER_MANAGEMENT_GET_DETAIL_FAILURE, error)
     }
   },
-  async createUser ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
+  async createUserProfile ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
     try {
       commit(USER_MANAGEMENT_CREATE_REQUEST)
-      await createUser({
+      await createUserProfile({
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
@@ -216,14 +216,13 @@ const actions = {
       })
       commit(USER_MANAGEMENT_CREATE_SUCCESS)
     } catch (error) {
-      console.log(error)
       commit(USER_MANAGEMENT_CREATE_FAILURE, error)
     }
   },
   async deleteUser ({ commit }, { id }) {
     try {
       commit(USER_MANAGEMENT_DELETE_REQUEST)
-      await deleteUser({ id: id })
+      await deleteUserProfile({ id: id })
       commit(USER_MANAGEMENT_DELETE_SUCCESS)
     } catch (error) {
       commit(USER_MANAGEMENT_DELETE_FAILURE, error)
