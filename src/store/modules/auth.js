@@ -1,7 +1,11 @@
 import {
+  firebaseAuth
+} from '@/services/firebase'
+
+import {
   login,
   logout
-} from '@/services/firebase'
+} from '@/services/authService'
 
 import {
   LOGIN_REQUEST,
