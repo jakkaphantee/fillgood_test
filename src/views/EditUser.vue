@@ -2,7 +2,7 @@
   <div class="pt-5 pb-5" align="left">
     <b-container>
       <h2>
-        <strong>Create User</strong>
+        <strong>Edit User</strong>
       </h2>
       <div v-if="isLoading" class="mt-5 mb-5" align="center">
         <b-spinner variant="warning" />
@@ -158,7 +158,7 @@ export default {
     isLoading () {
       if (!this.isLoading && !this.isSuccess) {
         alert(this.getError)
-      } else {
+      } else if (!this.isLoading && this.isSuccess) {
         this.setData()
       }
     },
