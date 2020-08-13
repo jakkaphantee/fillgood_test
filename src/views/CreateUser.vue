@@ -16,12 +16,17 @@
               </h5>
             </b-col>
             <b-col class="mt-4" md="12">
-              <label for="username">
-                <strong>Username*</strong>
+              <label for="email">
+                <strong>Email*</strong>
               </label>
-              <b-input id="username" class="web-theme-input-box" :class="$v.username.$anyError && $v.username.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.username.$model" />
-              <div class="error-message" v-if="!$v.username.required && $v.username.$dirty">
-                This field is required
+              <b-input id="email" type="email" class="web-theme-input-box" :class="$v.email.$anyError && $v.email.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.email.$model" />
+              <div class="error-message">
+                <div v-if="!$v.email.required && $v.email.$dirty">
+                  This field is required
+                </div>
+                <div v-else-if="!$v.email.email && $v.email.$dirty">
+                  Must use valid email address
+                </div>
               </div>
             </b-col>
             <b-col class="mt-4" md="12">
@@ -108,12 +113,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { required } from 'vuelidate/lib/validators'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
-      username: '',
+      email: '',
       password: '',
       confirmPassword: '',
       firstName: '',
@@ -124,8 +129,9 @@ export default {
     }
   },
   validations: {
-    username: {
-      required
+    email: {
+      required,
+      email
     },
     password: {
       required
@@ -149,7 +155,7 @@ export default {
         if (this.$v.$invalid) {
           alert('Please re-check your form.')
         } else {
-          this.createUserProfile({ firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
+          this.createUserProfile({ email: this.email, password: this.password, firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
         }
       } else {
         alert('Please fill the form.')
