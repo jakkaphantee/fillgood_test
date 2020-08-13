@@ -39,9 +39,9 @@
           </div>
         </template>
 
-       <template v-slot:cell(edit)>
+       <template v-slot:cell(edit)="data">
          <div align="right">
-           <b-button class="web-theme-button-secondary" size="sm">
+           <b-button class="web-theme-button-secondary" size="sm" @click="changePage('EditUser', data.item.id)">
              Edit
            </b-button>
          </div>
@@ -93,8 +93,8 @@ export default {
     ...mapActions('userManagement', {
       getUser: 'getUser'
     }),
-    changePage (routeName) {
-      this.$router.push({ name: routeName })
+    changePage (routeName, id) {
+      this.$router.push({ name: routeName, params: { ...(id && { id: id }) } })
     },
     addressFormat (value) {
       if (value.length > 30) {
