@@ -4,6 +4,9 @@
       <h2>
         <strong>Create User</strong>
       </h2>
+      <div class="error-message" style="font-weight: 400;">
+        * = required
+      </div>
       <b-row>
         <b-col class="mt-5" md="6">
           <b-row>
@@ -14,21 +17,30 @@
             </b-col>
             <b-col class="mt-4" md="12">
               <label for="username">
-                <strong>Username</strong>
+                <strong>Username*</strong>
               </label>
-              <b-input id="username" class="web-theme-input-box" autocomplete="off" v-model="username" />
+              <b-input id="username" class="web-theme-input-box" :class="$v.username.$anyError && $v.username.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.username.$model" />
+              <div class="error-message" v-if="!$v.username.required && $v.username.$dirty">
+                This field is required
+              </div>
             </b-col>
             <b-col class="mt-4" md="12">
               <label for="password">
-                <strong>Password</strong>
+                <strong>Password*</strong>
               </label>
-              <b-input id="password" type="password" class="web-theme-input-box" autocomplete="off" v-model="password" />
+              <b-input id="password" type="password" class="web-theme-input-box" :class="$v.password.$anyError && $v.password.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.password.$model" />
+              <div class="error-message" v-if="!$v.password.required && $v.password.$dirty">
+                This field is required
+              </div>
             </b-col>
             <b-col class="mt-4" md="12">
               <label for="confirmPassword">
-                <strong>Confirm Password</strong>
+                <strong>Confirm Password*</strong>
               </label>
-              <b-input id="confirmPassword" type="password" class="web-theme-input-box" autocomplete="off" v-model="confirmPassword" />
+              <b-input id="confirmPassword" type="password" class="web-theme-input-box" :class="$v.password.$anyError && $v.confirmPassword.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.confirmPassword.$model" />
+              <div class="error-message" v-if="!$v.confirmPassword.required && $v.confirmPassword.$dirty">
+                This field is required
+              </div>
             </b-col>
           </b-row>
         </b-col>
@@ -41,15 +53,21 @@
             </b-col>
             <b-col class="mt-4" md="6">
               <label for="firstName">
-                <strong>First Name</strong>
+                <strong>First Name*</strong>
               </label>
-              <b-input id="firstName" class="web-theme-input-box" autocomplete="off" v-model="firstName" />
+              <b-input id="firstName" class="web-theme-input-box" :class="$v.firstName.$anyError && $v.firstName.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.firstName.$model" />
+              <div class="error-message" v-if="!$v.firstName.required && $v.firstName.$dirty">
+                This field is required
+              </div>
             </b-col>
             <b-col class="mt-4" md="6">
               <label for="lastName">
-                <strong>Last Name</strong>
+                <strong>Last Name*</strong>
               </label>
-              <b-input id="lastName" class="web-theme-input-box" autocomplete="off" v-model="lastName" />
+              <b-input id="lastName" class="web-theme-input-box" :class="$v.lastName.$anyError && $v.lastName.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.lastName.$model" />
+              <div class="error-message" v-if="!$v.lastName.required && $v.lastName.$dirty">
+                This field is required
+              </div>
             </b-col>
             <b-col class="mt-4" md="6">
               <label for="phoneNumber">
@@ -72,12 +90,12 @@
           </b-row>
         </b-col>
       </b-row>
-      <div class="mt-4">
+      <div class="mt-5">
         <b-row align-h="center">
           <b-col md="6">
-            <b-button class="web-theme-button-primary pt-3 pb-3" block>
-              Create
-              <div class="is-loading">
+            <b-button class="web-theme-button-primary pt-3 pb-3" block :disabled="isLoading" @click="submitCreate()">
+              <strong>Create</strong>
+              <div v-if="isLoading" class="is-loading">
                 <div class="loader" />
               </div>
             </b-button>
@@ -89,6 +107,9 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { required } from 'vuelidate/lib/validators'
+
 export default {
   data () {
     return {
@@ -101,6 +122,63 @@ export default {
       age: '',
       address: ''
     }
+  },
+  validations: {
+    username: {
+      required
+    },
+    password: {
+      required
+    },
+    confirmPassword: {
+      required
+    },
+    firstName: {
+      required
+    },
+    lastName: {
+      required
+    }
+  },
+  methods: {
+    ...mapActions('userManagement', {
+      createUser: 'createUser'
+    }),
+    submitCreate () {
+      if (this.$v.$anyDirty) {
+        if (this.$v.$invalid) {
+          alert('Please re-check your form.')
+        } else {
+          this.createUser({ firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
+        }
+      } else {
+        alert('Please fill the form.')
+      }
+    }
+  },
+  computed: {
+    ...mapState('userManagement', {
+      isLoading: (state) => state.create.isLoading,
+      isSuccess: (state) => state.create.isSuccess,
+      errorMessage: (state) => state.create.errorMessage
+    })
+  },
+  watch: {
+    isLoading () {
+      if (!this.isLoading && !this.isSuccess) {
+        alert(this.errorMessage)
+      } else if (!this.isLoading && this.isSuccess) {
+        this.$router.push({ name: 'HomePage' })
+      }
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.error-message {
+  font-weight: 200;
+  font-size: 10pt;
+  color: red;
+}
+</style>
