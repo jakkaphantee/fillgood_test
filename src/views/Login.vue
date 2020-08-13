@@ -8,6 +8,8 @@
               <h4>
                 <strong>Sign In</strong>
               </h4>
+              User: admin@admin.com
+              Password: admin442
             </div>
             <div class="mt-5" align="left">
               <label for="username">
