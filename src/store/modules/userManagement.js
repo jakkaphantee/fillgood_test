@@ -1,6 +1,9 @@
-// import {
-//   firebaseFirestore
-// } from '@/services/firebase'
+import {
+  getUser,
+  getUserDetail,
+  createUser,
+  deleteUser
+} from '@/services/userManagementService'
 
 import {
   USER_MANAGEMENT_GET_REQUEST,
@@ -63,11 +66,20 @@ const mutations = {
     }
   },
   [USER_MANAGEMENT_GET_SUCCESS] (state, response) {
+    const data = []
+    response.forEach((user) => {
+      const object = {
+        id: user.id,
+        ...user.data()
+      }
+      data.push(object)
+    })
+
     state.list = {
       ...state.list,
       isLoading: false,
       isSuccess: true,
-      data: response
+      data: data
     }
   },
   [USER_MANAGEMENT_GET_FAILURE] (state, error) {
@@ -175,16 +187,47 @@ const mutations = {
 
 const actions = {
   async getUser ({ commit }) {
-    //
+    try {
+      commit(USER_MANAGEMENT_GET_REQUEST)
+      const response = await getUser()
+      commit(USER_MANAGEMENT_GET_SUCCESS, response)
+    } catch (error) {
+      commit(USER_MANAGEMENT_GET_FAILURE, error)
+    }
   },
   async getUserDetail ({ commit }, { id }) {
-    //
+    try {
+      commit(USER_MANAGEMENT_GET_DETAIL_REQUEST)
+      const response = await getUserDetail({ id: id })
+      commit(USER_MANAGEMENT_GET_DETAIL_SUCCESS, response)
+    } catch (error) {
+      commit(USER_MANAGEMENT_GET_DETAIL_FAILURE, error)
+    }
   },
-  async createUser ({ commit }, { firstName, lastName, age, address }) {
-    //
+  async createUser ({ commit }, { firstName, lastName, phoneNumber, age, address }) {
+    try {
+      commit(USER_MANAGEMENT_CREATE_REQUEST)
+      await createUser({
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        age: age,
+        address: address
+      })
+      commit(USER_MANAGEMENT_CREATE_SUCCESS)
+    } catch (error) {
+      console.log(error)
+      commit(USER_MANAGEMENT_CREATE_FAILURE, error)
+    }
   },
   async deleteUser ({ commit }, { id }) {
-    //
+    try {
+      commit(USER_MANAGEMENT_DELETE_REQUEST)
+      await deleteUser({ id: id })
+      commit(USER_MANAGEMENT_DELETE_SUCCESS)
+    } catch (error) {
+      commit(USER_MANAGEMENT_DELETE_FAILURE, error)
+    }
   }
 }
 
