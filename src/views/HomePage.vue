@@ -13,7 +13,7 @@
           </h2>
         </b-col>
         <b-col md="4" align="right">
-          <b-button class="web-theme-button-secondary" block @click="changePage('CreateUser')">
+          <b-button v-if="isAdmin" class="web-theme-button-secondary" block @click="changePage('CreateUser')">
             Create
           </b-button>
         </b-col>
@@ -41,8 +41,11 @@
 
        <template v-slot:cell(edit)="data">
          <div align="right">
-           <b-button class="web-theme-button-secondary" size="sm" @click="changePage('EditUser', data.item.id)">
+           <b-button v-if="isAdmin" class="web-theme-button-secondary" size="sm" @click="changePage('EditUser', data.item.id)">
              Edit
+           </b-button>
+           <b-button v-else class="web-theme-button-secondary" size="sm" @click="changePage('UserDetail', data.item.id)">
+             View
            </b-button>
          </div>
        </template>
@@ -107,11 +110,12 @@ export default {
     }
   },
   computed: {
-    ...mapState('userManagement', {
-      isLoading: (state) => state.list.isLoading,
-      isSuccess: (state) => state.list.isSuccess,
-      list: (state) => state.list.data,
-      errorMessage: (state) => state.list.errorMessage
+    ...mapState({
+      isAdmin: (state) => state.auth.isAdmin,
+      isLoading: (state) => state.userManagement.list.isLoading,
+      isSuccess: (state) => state.userManagement.list.isSuccess,
+      list: (state) => state.userManagement.list.data,
+      errorMessage: (state) => state.userManagement.list.errorMessage
     })
   },
   watch: {
