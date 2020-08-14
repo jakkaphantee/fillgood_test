@@ -16,12 +16,9 @@ import {
 
 firebaseAuth.onAuthStateChanged((user) => {
   if (user) {
-    console.log(user.email)
     state.isLoggedIn = true
     state.userProfile = user
-    if (state.isFirebaseInit) {
-      state.isAdmin = user.email === 'admin@admin.com'
-    }
+    state.isAdmin = user.email === 'admin@admin.com'
   }
   state.isFirebaseInit = false
 })

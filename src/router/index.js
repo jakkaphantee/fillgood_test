@@ -6,6 +6,7 @@ import HomePage from '@/views/HomePage'
 import MyProfile from '@/views/MyProfile'
 import CreateUser from '@/views/CreateUser'
 import EditUser from '@/views/EditUser'
+import UserDetail from '@/views/UserDetail'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/edit/:id',
     name: 'EditUser',
     component: EditUser
+  },
+  {
+    path: '/:id',
+    name: 'UserDetail',
+    component: UserDetail
   }
 ]
 
