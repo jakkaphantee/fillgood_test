@@ -11,7 +11,7 @@
             </div>
             <div class="mt-5" align="left">
               <label for="username">
-                <strong>Username</strong>
+                <strong>Email</strong>
               </label>
               <b-input id="username" class="web-theme-input-box" type="text" autocomplete="off" v-model="username" />
             </div>
