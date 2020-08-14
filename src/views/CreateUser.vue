@@ -33,18 +33,28 @@
               <label for="password">
                 <strong>Password*</strong>
               </label>
-              <b-input id="password" type="password" class="web-theme-input-box" :class="$v.password.$anyError && $v.password.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.password.$model" />
-              <div class="error-message" v-if="!$v.password.required && $v.password.$dirty">
-                This field is required
+              <b-input id="password" type="password" class="web-theme-input-box" :class="$v.password.$anyError || !$v.confirmPassword.sameAsPassword && $v.password.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.password.$model" />
+              <div class="error-message" v-if="$v.password.$dirty">
+                <div class="error-message" v-if="!$v.password.required">
+                  This field is required
+                </div>
+                <div class="error-message" v-if="!$v.confirmPassword.sameAsPassword">
+                  Password doesn't match
+                </div>
               </div>
             </b-col>
             <b-col class="mt-4" md="12">
               <label for="confirmPassword">
                 <strong>Confirm Password*</strong>
               </label>
-              <b-input id="confirmPassword" type="password" class="web-theme-input-box" :class="$v.password.$anyError && $v.confirmPassword.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.confirmPassword.$model" />
-              <div class="error-message" v-if="!$v.confirmPassword.required && $v.confirmPassword.$dirty">
-                This field is required
+              <b-input id="confirmPassword" type="password" class="web-theme-input-box" :class="$v.confirmPassword.$anyError && $v.confirmPassword.$dirty ? 'error' : ''" autocomplete="off" v-model="$v.confirmPassword.$model" />
+              <div class="error-message" v-if="$v.confirmPassword.$dirty">
+                <div class="error-message" v-if="!$v.confirmPassword.required">
+                  This field is required
+                </div>
+                <div class="error-message" v-if="!$v.confirmPassword.sameAsPassword">
+                  Password doesn't match
+                </div>
               </div>
             </b-col>
           </b-row>
@@ -113,7 +123,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, sameAs } from 'vuelidate/lib/validators'
 
 export default {
   data () {
@@ -137,13 +147,19 @@ export default {
       required
     },
     confirmPassword: {
-      required
+      required,
+      sameAsPassword: sameAs('password')
     },
     firstName: {
       required
     },
     lastName: {
       required
+    }
+  },
+  mounted () {
+    if (!this.isAdmin) {
+      this.$router.replace({ name: 'HomePage' })
     }
   },
   methods: {
@@ -153,7 +169,9 @@ export default {
     }),
     submitCreate () {
       if (this.$v.$anyDirty) {
-        if (this.$v.$invalid) {
+        if (!this.$v.confirmPassword.sameAsPassword) {
+          alert('Password doen`t match')
+        } else if (this.$v.$invalid) {
           alert('Please re-check your form.')
         } else {
           this.createUserProfile({ email: this.email, password: this.password, firstName: this.firstName, lastName: this.lastName, age: this.age, phoneNumber: this.phoneNumber, address: this.address })
@@ -165,21 +183,19 @@ export default {
   },
   computed: {
     ...mapState({
+      isAdmin: (state) => state.auth.isAdmin,
       isLoading: (state) => state.userManagement.create.isLoading,
       isSuccess: (state) => state.userManagement.create.isSuccess,
-      errorMessage: (state) => state.userManagement.create.errorMessage,
-      isAdmin: (state) => state.auth.isAdmin
+      errorMessage: (state) => state.userManagement.create.errorMessage
     })
   },
   watch: {
-    isLoading () {
+    async isLoading () {
       if (!this.isLoading && !this.isSuccess) {
         alert(this.errorMessage)
       } else if (!this.isLoading && this.isSuccess) {
+        await this.login({ email: 'admin@admin.com', password: 'admin442' })
         this.$router.push({ name: 'HomePage' })
-        if (this.isAdmin) {
-          this.login({ email: 'admin@admin.com', password: 'admin442' })
-        }
       }
     }
   }
