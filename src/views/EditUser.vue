@@ -112,6 +112,9 @@ export default {
     address: {}
   },
   mounted () {
+    if (!this.isAdmin) {
+      this.$router.replace({ name: 'HomePage' })
+    }
     this.id = this.$route.params.id
     this.getUserDetail({ id: this.id })
   },
@@ -141,17 +144,18 @@ export default {
     }
   },
   computed: {
-    ...mapState('userManagement', {
-      isLoading: (state) => state.detail.isLoading,
-      isSuccess: (state) => state.detail.isSuccess,
-      detail: (state) => state.detail.data,
-      getError: (state) => state.detail.errorMessage,
-      isUpdating: (state) => state.update.isLoading,
-      isUpdateSuccess: (state) => state.update.isSuccess,
-      updateError: (state) => state.update.errorMessage
+    ...mapState({
+      isAdmin: (state) => state.auth.isAdmin,
+      isLoading: (state) => state.userManagement.detail.isLoading,
+      isSuccess: (state) => state.userManagement.detail.isSuccess,
+      detail: (state) => state.userManagement.detail.data,
+      getError: (state) => state.userManagement.detail.errorMessage,
+      isUpdating: (state) => state.userManagement.update.isLoading,
+      isUpdateSuccess: (state) => state.userManagement.update.isSuccess,
+      updateError: (state) => state.userManagement.update.errorMessage
     }),
     email () {
-      return this.detail.email || 'dd'
+      return this.detail.email || ''
     }
   },
   watch: {
